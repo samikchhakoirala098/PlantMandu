@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "407278167734",
+    "project_id": "plantmandu-d0478",
+    "storage_bucket": "plantmandu-d0478.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407278167734:android:5cbe889005cb5b5b66a817",
+        "android_client_info": {
+          "package_name": "com.example.plantmandu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeRxrJXLBOOvtKeLWP-1yC3aC2VXwuuvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
