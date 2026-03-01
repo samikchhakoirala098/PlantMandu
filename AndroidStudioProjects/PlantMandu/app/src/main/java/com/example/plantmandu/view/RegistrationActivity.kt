@@ -1,6 +1,6 @@
 package com.example.plantmandu.view
 
-import UserViewModel
+import com.example.plantmandu.viewmodel.UserViewModel
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,8 +43,7 @@ import com.example.plantmandu.ui.theme.Blue
 import com.example.plantmandu.ui.theme.DarkGreen
 import com.example.plantmandu.ui.theme.LightGrayBackground
 import com.example.plantmandu.ui.theme.White
-import com.example.postifyapp.view.LoginActivity
-//import com.example.plantmandu.viewmodel.UserViewModel
+import com.example.plantmandu.view.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class RegistrationActivity : ComponentActivity() {
@@ -228,7 +228,8 @@ fun RegisterBody() {
                                     val model = UserModel(
                                         userId = userId,
                                         email = email,
-                                        firstName = "", lastName = "", dob = "", contact = ""
+                                        firstName = "", lastName = "", dob = "", contact = "",
+                                        role = if (email == "admin@plantmandu.com") "admin" else "user"
                                     )
                                     userViewModel.addUserToDatabase(
                                         userId,

@@ -1,7 +1,5 @@
 package com.example.plantmandu.view
 
-
-import UserViewModel
 import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
@@ -13,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.plantmandu.repository.UserRepoImpl
 //import com.example.plantmandu.viewmodel.UserViewModel
 import com.example.plantmandu.R
+import com.example.plantmandu.viewmodel.UserViewModel
 
 class ForgetPasswordActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
