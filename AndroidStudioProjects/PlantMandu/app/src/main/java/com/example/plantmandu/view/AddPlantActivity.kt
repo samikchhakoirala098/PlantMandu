@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -67,14 +68,14 @@ fun AddPlantContent(viewModel: PlantViewModel, onBack: () -> Unit) {
                 value = name,
                 onValueChange = { name = it },
                 label = { Text("Plant Name") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().testTag("plantNameInput")
             )
             Spacer(modifier = Modifier.height(16.dp))
             OutlinedTextField(
                 value = description,
                 onValueChange = { description = it },
                 label = { Text("Description") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("plantDescriptionInput"),
                 minLines = 3
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -82,7 +83,7 @@ fun AddPlantContent(viewModel: PlantViewModel, onBack: () -> Unit) {
                 value = price,
                 onValueChange = { price = it },
                 label = { Text("Price ($)") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("plantPriceInput"),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -90,7 +91,7 @@ fun AddPlantContent(viewModel: PlantViewModel, onBack: () -> Unit) {
                 value = stock,
                 onValueChange = { stock = it },
                 label = { Text("Stock Number") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().testTag("plantStockInput"),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
             Spacer(modifier = Modifier.height(32.dp))
@@ -108,7 +109,7 @@ fun AddPlantContent(viewModel: PlantViewModel, onBack: () -> Unit) {
                         }
                     }
                 },
-                modifier = Modifier.fillMaxWidth().height(55.dp)
+                modifier = Modifier.fillMaxWidth().height(55.dp).testTag("addPlantButton")
             ) {
                 Text("Add Plant", fontSize = 18.sp, fontWeight = FontWeight.Bold)
             }
