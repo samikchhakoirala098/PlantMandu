@@ -13,15 +13,24 @@
         android:theme="@style/Theme.PlantMandu" >
         <activity
             android:name=".view.DashboardActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/title_activity_dashboard"
-            android:theme="@style/Theme.PlantMandu" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.PlantMandu" />
+        <activity
+            android:name=".view.AdminDashboardActivity"
+            android:exported="false"
+            android:label="Admin Panel"
+            android:theme="@style/Theme.PlantMandu" />
+        <activity
+            android:name=".view.UserDashboardActivity"
+            android:exported="false"
+            android:label="User Dashboard"
+            android:theme="@style/Theme.PlantMandu" />
+        <activity
+            android:name=".view.AddPlantActivity"
+            android:exported="false"
+            android:label="Add Plant"
+            android:theme="@style/Theme.PlantMandu" />
         <activity
             android:name=".view.SplashActivity"
             android:exported="true"
@@ -29,7 +38,6 @@
             android:theme="@style/Theme.PlantMandu" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -39,7 +47,7 @@
             android:label="@string/title_activity_registration"
             android:theme="@style/Theme.PlantMandu" />
         <activity
-            android:name="v.LoginActivity"
+            android:name=".view.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.PlantMandu" />
