@@ -14,9 +14,13 @@ val Pink40 = Color(0xFF7D5260)
 val Blue = Color(0xFF2246E0)
 val Black = Color(0xFF000000)
 
-val DarkGreen = Color(0xFF4CAF50)
-val LightGrayBackground = Color(0xFFF5F5F5)
+val DarkGreen = Color(0xFF1B5E20)
+val LeafGreen = Color(0xFF43A047)
+val SoftGreen = Color(0xFFE8F5E9)
 
-val LightGreen = Color(0xFF8BC34A) // Accent
+val EarthBrown = Color(0xFF5D4037)
+val LightGrayBackground = Color(0xFFF8F9FA)
+
 val White = Color.White
-val CardBackground = Color(0xFFF9F9F9)
+val CardBackground = Color(0xFFFFFFFF)
+val AccentOrange = Color(0xFFFF9800)
