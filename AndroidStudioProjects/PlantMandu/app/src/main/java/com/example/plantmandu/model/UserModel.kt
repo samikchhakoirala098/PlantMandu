@@ -8,7 +8,8 @@ data class UserModel(
     var firstName: String = "",
     var lastName: String = "",
     var dob: String = "",
-    var contact: String = ""
+    var contact: String = "",
+    var role: String = "user"
 ) {
     // This helper method is useful for the updateProfile function in your Repo
     fun toMap(): Map<String, Any?> {
