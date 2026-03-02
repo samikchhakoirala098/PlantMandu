@@ -19,6 +19,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import com.google.firebase.auth.FirebaseAuth
 import androidx.compose.ui.Modifier
@@ -28,9 +29,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.plantmandu.R
-import com.example.postifyapp.view.LoginActivity
+import com.example.plantmandu.repository.UserRepoImpl
+import com.example.plantmandu.viewmodel.UserViewModel
 import kotlinx.coroutines.delay
-
 
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,27 +48,28 @@ fun SplashBody() {
     val context = LocalContext.current
     val activity = context as Activity
     val currentUser = FirebaseAuth.getInstance().currentUser
-
+    val userViewModel = remember { UserViewModel(UserRepoImpl()) }
 
     LaunchedEffect (Unit) {
         delay(3000)
 
-        val intent= Intent(context,
-            LoginActivity::class.java)
-        context.startActivity(intent)
-        activity.finish()
-//        if (currentUser != null) {
-//            // User already logged in
-//            val intent = Intent(context, DashboardActivity::class.java)
-//            context.startActivity(intent)
-//            activity.finish()
-//        } else {
-//            // User not logged in
-//            val intent = Intent(context, LoginActivity::class.java)
-//            context.startActivity(intent)
-//            activity.finish()
-//        }
-
+        if (currentUser != null) {
+            userViewModel.getUserById(currentUser.uid) { success, userModel ->
+                if (success && userModel != null) {
+                    if (userModel.role == "admin") {
+                        context.startActivity(Intent(context, AdminDashboardActivity::class.java))
+                    } else {
+                        context.startActivity(Intent(context, UserDashboardActivity::class.java))
+                    }
+                } else {
+                    context.startActivity(Intent(context, LoginActivity::class.java))
+                }
+                activity.finish()
+            }
+        } else {
+            context.startActivity(Intent(context, LoginActivity::class.java))
+            activity.finish()
+        }
     }
     Scaffold { padding ->
         Column(
