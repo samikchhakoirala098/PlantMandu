@@ -1,8 +1,6 @@
-package com.example.postifyapp.view
+package com.example.plantmandu.view
 
-import UserViewModel
-import com.example.plantmandu.view.RegistrationActivity
-
+import com.example.plantmandu.viewmodel.UserViewModel
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,10 +33,10 @@ import androidx.compose.ui.unit.sp
 import com.example.plantmandu.R
 import com.example.plantmandu.ui.theme.Blue
 import com.example.plantmandu.ui.theme.LightGrayBackground
+import com.example.plantmandu.repository.UserRepoImpl
 import com.example.plantmandu.view.DashboardActivity
 import com.example.plantmandu.view.ForgetPasswordActivity
-
-//import com.example.postifyapp.viewmodel.UserViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,15 +56,13 @@ fun LoginBody() {
 
     val context = LocalContext.current
     val activity = context as Activity
-    val userViewModel = remember { UserViewModel(com.example.plantmandu.repository.UserRepoImpl()) }
+    val userViewModel = remember { UserViewModel(UserRepoImpl()) }
 
     val fieldModifier = Modifier.fillMaxWidth()
 
-    // --- MATCHING REGISTRATION COLORS ---
     val inputColors = TextFieldDefaults.colors(
-        // Use LightGrayBackground here to match RegistrationActivity
         unfocusedContainerColor = LightGrayBackground,
-        focusedContainerColor =LightGrayBackground,
+        focusedContainerColor = LightGrayBackground,
         focusedIndicatorColor = Blue,
         unfocusedIndicatorColor = Color.Transparent,
         disabledIndicatorColor = Color.Transparent
@@ -74,7 +71,7 @@ fun LoginBody() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White) // Matches Registration background
+            .background(Color.White)
             .padding(horizontal = 28.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -88,7 +85,6 @@ fun LoginBody() {
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        // --- Email Field ---
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -101,7 +97,6 @@ fun LoginBody() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // --- Password Field ---
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
@@ -127,7 +122,6 @@ fun LoginBody() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // --- Login Button ---
         Button(
             onClick = {
                 if (email.isEmpty() || password.isEmpty()) {
@@ -135,12 +129,22 @@ fun LoginBody() {
                 } else {
                     userViewModel.login(email, password) { success, message ->
                         if (success) {
-                            val firebaseUser = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
-                            if (firebaseUser?.isEmailVerified == true) {
-                                context.startActivity(Intent(context, DashboardActivity::class.java))
-                                activity.finish()
-                            } else {
-                                Toast.makeText(context, "Please verify your email via Gmail first.", Toast.LENGTH_LONG).show()
+                            val userId = FirebaseAuth.getInstance().currentUser?.uid
+                            if (userId != null) {
+                                userViewModel.getUserById(userId) { userSuccess, userModel ->
+                                    if (userSuccess && userModel != null) {
+                                        if (userModel.role == "admin") {
+                                            context.startActivity(Intent(context, AdminDashboardActivity::class.java))
+                                        } else {
+                                            context.startActivity(Intent(context, UserDashboardActivity::class.java))
+                                        }
+                                        activity.finish()
+                                    } else {
+                                        // Fallback if user model not found but logged in
+                                        context.startActivity(Intent(context, UserDashboardActivity::class.java))
+                                        activity.finish()
+                                    }
+                                }
                             }
                         } else {
                             Toast.makeText(context, "Login Failed: $message", Toast.LENGTH_LONG).show()
