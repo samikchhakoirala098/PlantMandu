@@ -1,3 +1,5 @@
+package com.example.plantmandu.viewmodel
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -40,11 +42,12 @@ class UserViewModel(val repo: UserRepo) : ViewModel() {
     val allUsers: MutableLiveData<List<UserModel>?>
         get() = _allUsers
 
-    fun getUserById(userId: String) {
+    fun getUserById(userId: String, callback: ((Boolean, UserModel?) -> Unit)? = null) {
         repo.getUserById(userId) { success, user ->
             if (success) {
                 _users.postValue(user)
             }
+            callback?.invoke(success, user)
         }
     }
 
